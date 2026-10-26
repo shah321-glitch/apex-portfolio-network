@@ -104,3 +104,32 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+/* Abstract Velvet Crimson Theme (Matches Reference Image 4) */
+.bg-velvet-crimson {
+  background: radial-gradient(circle at 85% 15%, rgba(220, 38, 38, 0.25) 0%, transparent 55%),
+              radial-gradient(circle at 15% 85%, rgba(153, 27, 27, 0.20) 0%, transparent 55%),
+              linear-gradient(135deg, #220609 0%, #110204 50%, #070102 100%);
+}
+
+/* Neon Halo Glow Effects (Matches Reference Images 2 & 3) */
+.glow-crimson {
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.45), 0 0 60px rgba(185, 28, 28, 0.25);
+}
+
+.glow-gold {
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.45), 0 0 60px rgba(217, 119, 6, 0.25);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.45), 0 0 60px rgba(2, 132, 199, 0.25);
+}
+
+/* Hide scrollbar for smooth mobile tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

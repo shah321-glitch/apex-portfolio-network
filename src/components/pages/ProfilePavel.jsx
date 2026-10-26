@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowLeft, ArrowRight, Shield, Terminal, Send, CheckCircle2, Lock, Cpu, Calendar, MapPin, Globe } from 'lucide-react';
 import { soundFX } from '../../utils/soundFX';
 import { PROFILES_DATA } from '../../data/profilesData';
-import Durov3D from '../3d/Durov3D';
 
 export default function ProfilePavel({ setCurrentPage }) {
   const profile = PROFILES_DATA.pavel;
@@ -85,15 +84,26 @@ export default function ProfilePavel({ setCurrentPage }) {
             </div>
           </div>
 
-          {/* 3D Interactive Feature Pillar */}
+          {/* Executive Feature Portrait Pillar */}
           <div className="lg:col-span-5">
             <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0c1622] via-[#080f17] to-[#05090e] border border-sky-500/30 shadow-2xl overflow-hidden group">
-              <div className="absolute top-4 right-4 font-mono text-[10px] text-sky-400 tracking-widest uppercase">
-                WebGL Cryptographic Plane
+              <div className="absolute top-4 right-4 z-20 font-mono text-[10px] text-sky-400 tracking-widest uppercase px-2.5 py-1 rounded bg-black/60 border border-sky-500/30">
+                Telegram Sovereign
               </div>
-              <Durov3D hovered={true} className="h-80 w-full" />
+              <div className="relative h-80 w-full rounded-2xl overflow-hidden border border-white/10">
+                <img
+                  src="/images/pavel/pavel-visionary-gaze.jpg"
+                  alt="Pavel Durov Visionary Portrait"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-75" />
+                <div className="absolute bottom-3 left-3 right-3 font-mono text-xs text-white font-bold flex items-center justify-between">
+                  <span>PAVEL DUROV</span>
+                  <span className="text-sky-400">★ 950M ARCHITECT</span>
+                </div>
+              </div>
               <div className="mt-4 pt-4 border-t border-white/[0.08] text-center font-mono text-xs text-zinc-400">
-                "The Cryptographic Citadel" • MTProto 3D Vector Mesh
+                "The Cryptographic Citadel" • MTProto Network Monograph
               </div>
             </div>
           </div>

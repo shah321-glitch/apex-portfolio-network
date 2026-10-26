@@ -28,6 +28,9 @@ import { soundFX } from '../../utils/soundFX';
 import { PROFILES_EXTENDED_DATA } from '../../data/profilesExtendedData';
 import PersonaCharacter3D from '../3d/PersonaCharacter3D';
 import InteractiveTiltCard from '../3d/InteractiveTiltCard';
+import VijayInteractiveModule from '../interactive/VijayInteractiveModule';
+import PavelInteractiveModule from '../interactive/PavelInteractiveModule';
+import SalmanInteractiveModule from '../interactive/SalmanInteractiveModule';
 import gsap from 'gsap';
 
 export default function PersonaPortfolioView({
@@ -125,33 +128,33 @@ export default function PersonaPortfolioView({
       {/* =========================================================================
           PERSISTENT SUB-PORTFOLIO NAVIGATION HEADER
       ========================================================================== */}
-      <div className="sticky top-20 z-40 backdrop-blur-xl border-b border-white/[0.08] bg-black/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="sticky top-20 z-40 backdrop-blur-xl border-b border-white/[0.08] bg-black/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:h-16 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           
           {/* Back to Main Hub & Persona Label */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3 text-xs font-mono">
             <button
               onClick={onBackToHub}
               onMouseEnter={() => soundFX.playHover()}
-              className="flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-zinc-400 hover:text-white transition-colors"
+              className="flex items-center space-x-1.5 uppercase tracking-wider text-zinc-400 hover:text-white transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Main Hub</span>
+              <span>Main Hub</span>
             </button>
             <span className="text-zinc-600">/</span>
-            <div className="flex items-center space-x-2 font-mono text-xs">
+            <div className="flex items-center space-x-2">
               <span
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: profile.theme.accent }}
               />
-              <span className="text-white font-bold tracking-wider uppercase">
+              <span className="text-white font-bold tracking-wider uppercase truncate max-w-[180px] sm:max-w-none">
                 {profile.name}
               </span>
             </div>
           </div>
 
-          {/* 5 Distinct Navigation Tabs */}
-          <nav className="flex items-center space-x-1 sm:space-x-2 font-mono text-[11px] sm:text-xs">
+          {/* 5 Distinct Navigation Tabs (Horizontally scrollable on small mobile screens) */}
+          <nav className="flex items-center space-x-1.5 font-mono text-[11px] sm:text-xs overflow-x-auto no-scrollbar py-1 max-w-full">
             {[
               { id: 'home', label: 'Home' },
               { id: 'journey', label: 'Journey' },
@@ -165,7 +168,7 @@ export default function PersonaPortfolioView({
                   key={tab.id}
                   onClick={() => handleNav(tab.id)}
                   onMouseEnter={() => soundFX.playHover()}
-                  className={`px-3 py-1.5 rounded-full uppercase tracking-wider transition-all duration-300 ${
+                  className={`whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-full uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                     active
                       ? 'text-black font-bold shadow-md'
                       : 'text-zinc-400 hover:text-white hover:bg-white/[0.05]'
@@ -221,13 +224,18 @@ export default function PersonaPortfolioView({
             </div>
           </div>
 
-          {/* Personality-Matched Animated Holographic Stage with Voice Guide */}
+          {/* High-Fidelity Voice Guide & Soundstage (Crystal Clear Portrait) */}
           <PersonaCharacter3D
             personId={personId}
             introData={profile.audioIntroduction}
             theme={profile.theme}
             onNavigate={(page) => handleNav(page)}
           />
+
+          {/* Personality-Matched Bespoke Interactive Deck */}
+          {personId === 'vijay' && <VijayInteractiveModule theme={profile.theme} />}
+          {personId === 'pavel' && <PavelInteractiveModule theme={profile.theme} />}
+          {personId === 'salman' && <SalmanInteractiveModule theme={profile.theme} />}
 
           {/* Executive Photographic Archive Banner */}
           {galleryItems.length > 0 && (
@@ -638,28 +646,33 @@ export default function PersonaPortfolioView({
             <div className="lg:col-span-6 space-y-8">
               <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] space-y-6">
                 
-                {/* Embed Early Roots / University Portrait */}
+                {/* Embed Early Roots / Intellectual Genesis Portrait - PERFECT FACIAL FRAMING */}
                 {profile.images && (
                   <div
-                    className="relative rounded-2xl overflow-hidden border max-h-64 mb-6 group"
+                    className="relative rounded-2xl overflow-hidden border aspect-[4/5] sm:aspect-[3/4] max-w-sm sm:max-w-md mx-auto mb-6 group shadow-2xl bg-black/60"
                     style={{ borderColor: profile.theme.border }}
                   >
                     <img
                       src={
-                        (personId === 'vijay' && profile.images.executivePortrait) ||
+                        (personId === 'vijay' && profile.images.cinematicGrit) ||
                         (personId === 'pavel' && profile.images.capSmile) ||
                         (personId === 'salman' && profile.images.iconicJacket) ||
                         profile.images.primary
                       }
                       alt={`${profile.name} Roots`}
-                      className="w-full h-64 object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover object-[center_15%] group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-                    <div
-                      className="absolute bottom-3 left-4 font-mono text-xs"
-                      style={{ color: profile.theme.primaryLight }}
-                    >
-                      EARLY ROOTS & INTELLECTUAL GENESIS
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-xs">
+                      <span
+                        className="font-bold tracking-wider"
+                        style={{ color: profile.theme.primaryLight }}
+                      >
+                        EARLY ROOTS & INTELLECTUAL GENESIS
+                      </span>
+                      <span className="text-[10px] text-zinc-400 uppercase tracking-widest hidden sm:inline">
+                        HISTORICAL ARCHIVE
+                      </span>
                     </div>
                   </div>
                 )}
@@ -698,6 +711,37 @@ export default function PersonaPortfolioView({
                   borderColor: profile.theme.border
                 }}
               >
+                {/* Embed Public Welfare / Leadership Portrait - PERFECT FACIAL FRAMING */}
+                {profile.images && (
+                  <div
+                    className="relative rounded-2xl overflow-hidden border aspect-[4/5] sm:aspect-[3/4] max-w-sm sm:max-w-md mx-auto mb-6 group shadow-2xl bg-black/60"
+                    style={{ borderColor: profile.theme.border }}
+                  >
+                    <img
+                      src={
+                        (personId === 'vijay' && profile.images.cmOfficial) ||
+                        (personId === 'pavel' && profile.images.telegramPhone) ||
+                        (personId === 'salman' && profile.images.redseaCarpet) ||
+                        profile.images.primary
+                      }
+                      alt={`${profile.name} Welfare & Mission`}
+                      className="w-full h-full object-cover object-[center_12%] group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-xs">
+                      <span
+                        className="font-bold tracking-wider"
+                        style={{ color: profile.theme.accent }}
+                      >
+                        HUMANITARIAN MISSION & MANDATE
+                      </span>
+                      <span className="text-[10px] text-zinc-400 uppercase tracking-widest hidden sm:inline">
+                        PUBLIC RECORD
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center space-x-3 text-white">
                   <Heart
                     className="w-5 h-5"

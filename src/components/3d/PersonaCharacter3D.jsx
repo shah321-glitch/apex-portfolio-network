@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, Navigation, Shield, Award, Sparkles, Terminal, Heart, Zap, Radio, Globe } from 'lucide-react';
+import { Play, Pause, RotateCcw, Volume2, VolumeX, Shield, Award, Sparkles, Terminal, Heart, Zap, Radio, Globe, ChevronRight } from 'lucide-react';
 import { soundFX } from '../../utils/soundFX';
-import Thalapathy3D from './Thalapathy3D';
-import Durov3D from './Durov3D';
-import Salman3D from './Salman3D';
+import { voiceEngine } from '../../utils/voiceGuide';
+import GlowingHalo from '../common/GlowingHalo';
 
 export default function PersonaCharacter3D({
   personId = 'vijay',
@@ -12,9 +11,9 @@ export default function PersonaCharacter3D({
   onNavigate
 }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [viewMode, setViewMode] = useState('hologram'); // 'hologram' | 'vector3d'
+  const [speechProgress, setSpeechProgress] = useState(0);
 
-  // Personality-specific portrait for the holographic animation
+  // Personality-specific high-resolution portrait
   const getPersonaImage = () => {
     switch (personId) {
       case 'vijay':
@@ -22,7 +21,7 @@ export default function PersonaCharacter3D({
       case 'pavel':
         return '/images/pavel/pavel-visionary-gaze.jpg';
       case 'salman':
-        return '/images/salman/salman-iconic-jacket.jpg';
+        return '/images/salman/salman-navy-formal.jpg';
       default:
         return '';
     }
@@ -33,32 +32,36 @@ export default function PersonaCharacter3D({
   const toggleSpeech = () => {
     soundFX.playClick();
     if (isSpeaking) {
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      voiceEngine.stop();
       setIsSpeaking(false);
     } else {
       setIsSpeaking(true);
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(introData.message);
-        utterance.rate = 1.0;
-        utterance.pitch = personId === 'pavel' ? 1.05 : 0.95;
-        utterance.onend = () => setIsSpeaking(false);
-        utterance.onerror = () => setIsSpeaking(false);
-        window.speechSynthesis.speak(utterance);
-      } else {
-        const timer = setTimeout(() => setIsSpeaking(false), 9000);
-        return () => clearTimeout(timer);
-      }
+      voiceEngine.speak(
+        personId,
+        introData.message,
+        () => setIsSpeaking(false),
+        () => setIsSpeaking(false),
+        () => setIsSpeaking(true)
+      );
     }
+  };
+
+  const replaySpeech = () => {
+    soundFX.playClick();
+    voiceEngine.stop();
+    setIsSpeaking(true);
+    voiceEngine.speak(
+      personId,
+      introData.message,
+      () => setIsSpeaking(false),
+      () => setIsSpeaking(false),
+      () => setIsSpeaking(true)
+    );
   };
 
   useEffect(() => {
     return () => {
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      voiceEngine.stop();
     };
   }, []);
 
@@ -66,151 +69,131 @@ export default function PersonaCharacter3D({
     <div className="relative w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
       
       {/* =========================================================================
-          LEFT: STUNNING PERSONALITY-MATCHED 3D & HOLOGRAPHIC ANIMATION STAGE
+          LEFT: EXECUTIVE EDITORIAL PORTRAIT & HIGH-FIDELITY VOICE SOUNDSTAGE
       ========================================================================== */}
-      <div className="lg:col-span-7 h-[460px] sm:h-[500px] relative rounded-3xl border border-white/10 overflow-hidden bg-gradient-to-b from-white/[0.03] to-transparent shadow-2xl flex flex-col justify-between p-6">
-        
-        {/* Top HUD Bar */}
-        <div className="relative z-30 flex items-center justify-between font-mono text-[11px] text-zinc-300">
+      <div
+        className="lg:col-span-5 relative rounded-3xl border overflow-hidden p-6 sm:p-8 flex flex-col justify-between shadow-2xl transition-all duration-500"
+        style={{
+          backgroundColor: theme.panelBg,
+          borderColor: theme.border,
+          boxShadow: `0 25px 50px -12px ${theme.border}`
+        }}
+      >
+        {/* Top Header HUD Bar */}
+        <div className="relative z-20 flex items-center justify-between font-mono text-[11px] pb-4 border-b border-white/[0.08]">
           <div className="flex items-center space-x-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
             <span
-              className="w-2 h-2 rounded-full animate-ping"
-              style={{ backgroundColor: theme.accent }}
+              className="w-2 h-2 rounded-full"
+              style={{
+                backgroundColor: theme.accent,
+                boxShadow: `0 0 10px ${theme.accent}`
+              }}
             />
-            <span className="text-white uppercase font-bold tracking-widest">
-              {personId === 'vijay' && 'STATECRAFT HOLOGRAPHIC CORE'}
-              {personId === 'pavel' && 'CRYPTOGRAPHIC MTPROTO HUD'}
-              {personId === 'salman' && 'PLATINUM STARBURST AURA'}
+            <span className="text-white uppercase font-bold tracking-widest text-[10px]">
+              {personId === 'vijay' && 'STATECRAFT & CINEMA'}
+              {personId === 'pavel' && 'DIGITAL SOVEREIGNTY'}
+              {personId === 'salman' && 'ALTRUISM & MEGATITAN'}
             </span>
           </div>
 
-          {/* Mode Switcher */}
-          <div className="flex items-center space-x-1 bg-black/60 backdrop-blur-md p-1 rounded-full border border-white/10">
-            <button
-              onClick={() => { soundFX.playClick(); setViewMode('hologram'); }}
-              className={`px-2.5 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider transition-all ${
-                viewMode === 'hologram'
-                  ? 'bg-white text-black shadow'
-                  : 'text-zinc-400 hover:text-white'
-              }`}
-            >
-              Hologram
-            </button>
-            <button
-              onClick={() => { soundFX.playClick(); setViewMode('vector3d'); }}
-              className={`px-2.5 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider transition-all ${
-                viewMode === 'vector3d'
-                  ? 'bg-white text-black shadow'
-                  : 'text-zinc-400 hover:text-white'
-              }`}
-            >
-              3D Vector
-            </button>
-          </div>
+          <span className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest">
+            OFFICIAL DOSSIER
+          </span>
         </div>
 
-        {/* Center Stage: Personality-Matched Animations */}
-        <div className="relative z-20 my-auto flex items-center justify-center">
-          
-          {viewMode === 'hologram' ? (
-            <div className="relative w-64 sm:w-72 h-80 flex items-center justify-center">
-              
-              {/* --- VIJAY: Dynamic Red/Gold Energy Rings & Swirling Flame Orbits --- */}
-              {personId === 'vijay' && (
-                <>
-                  {/* Outer Pulsing Golden Ring */}
-                  <div className="absolute inset-0 rounded-full border border-amber-400/40 animate-[spin_12s_linear_infinite]" />
-                  <div className="absolute -inset-4 rounded-full border border-red-500/30 animate-[spin_18s_linear_infinite_reverse]" />
-                  <div className="absolute -inset-8 rounded-full border-2 border-dashed border-amber-400/20 animate-[spin_24s_linear_infinite]" />
-                  {/* Glowing Energy Flare */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-red-600/20 via-amber-500/10 to-transparent rounded-2xl blur-xl" />
-                </>
-              )}
-
-              {/* --- PAVEL: Cyberpunk Hexagonal Data Stream & Scanner Beam --- */}
-              {personId === 'pavel' && (
-                <>
-                  {/* Cyan Laser Grid Scanner */}
-                  <div className="absolute inset-0 rounded-2xl border border-sky-400/40 shadow-[0_0_30px_rgba(34,211,238,0.25)]" />
-                  <div className="absolute -inset-4 rounded-full border border-cyan-400/30 animate-[spin_8s_linear_infinite]" />
-                  <div className="absolute -inset-8 rounded-full border-2 border-dashed border-sky-500/20 animate-[spin_20s_linear_infinite_reverse]" />
-                  {/* Animated Vertical Laser Scanline */}
-                  <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse top-1/2 -translate-y-1/2" />
-                </>
-              )}
-
-              {/* --- SALMAN: Celestial Golden Starburst & Orbiting Turquoise Crystal --- */}
-              {personId === 'salman' && (
-                <>
-                  <div className="absolute inset-0 rounded-full border border-amber-400/40 shadow-[0_0_35px_rgba(245,158,11,0.2)] animate-[spin_14s_linear_infinite]" />
-                  <div className="absolute -inset-4 rounded-full border-2 border-dashed border-teal-400/30 animate-[spin_16s_linear_infinite_reverse]" />
-                  <div className="absolute -inset-8 rounded-full border border-amber-500/20 animate-[spin_22s_linear_infinite]" />
-                  <div className="absolute -top-3 right-4 w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_15px_#22d3ee] animate-ping" />
-                </>
-              )}
-
-              {/* Central Holographic Framed Portrait */}
-              <div className="relative w-52 h-64 sm:w-56 sm:h-72 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl group backdrop-blur-md">
-                <img
-                  src={personaImage}
-                  alt={introData.title}
-                  className={`w-full h-full object-cover object-top transition-all duration-700 ${
-                    isSpeaking ? 'scale-105 brightness-110' : 'scale-100 group-hover:scale-105'
-                  }`}
-                />
-                
-                {/* Holographic Scanline Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.05] to-black/80 pointer-events-none" />
-
-                {/* Persona Insignia Stamp */}
-                <div className="absolute bottom-3 left-3 right-3 font-mono text-[10px] text-zinc-300 flex items-center justify-between">
-                  <span className="font-bold text-white uppercase">{introData.title}</span>
-                  <span style={{ color: theme.accent }}>● LIVE</span>
-                </div>
-              </div>
-
-            </div>
-          ) : (
-            /* 3D WebGL Vector Mode */
-            <div className="w-full h-72 flex items-center justify-center">
-              {personId === 'vijay' && <Thalapathy3D hovered={true} className="h-72 w-full" />}
-              {personId === 'pavel' && <Durov3D hovered={true} className="h-72 w-full" />}
-              {personId === 'salman' && <Salman3D hovered={true} className="h-72 w-full" />}
-            </div>
-          )}
-
-        </div>
-
-        {/* Bottom Interactive Voice & Wave Controller */}
-        <div className="relative z-30 flex items-center justify-between bg-black/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/10">
-          <button
-            onClick={toggleSpeech}
-            onMouseEnter={() => soundFX.playHover()}
-            className="flex items-center space-x-3 px-4 py-2 rounded-xl text-black font-mono text-xs uppercase font-bold tracking-wider transition-all"
-            style={{ backgroundColor: theme.accent }}
+        {/* Crisp Central Portrait with Glowing Neon Halo (Matches Reference Images 2 & 3) */}
+        <div className="relative z-10 my-6 py-2 flex items-center justify-center">
+          <GlowingHalo
+            color={theme.accent}
+            size="320px"
+            showPodium={true}
           >
-            {isSpeaking ? (
-              <>
-                <Pause className="w-4 h-4" />
-                <span>Pause Voice Introduction</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-4 h-4" />
-                <span>Hear Voice Guide</span>
-              </>
+            <div
+              className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[4/5] rounded-2xl overflow-hidden border-2 shadow-2xl transition-all duration-500 group"
+              style={{
+                borderColor: isSpeaking ? theme.accent : 'rgba(255,255,255,0.2)',
+                boxShadow: isSpeaking
+                  ? `0 0 45px ${theme.accent}66, 0 20px 40px rgba(0,0,0,0.8)`
+                  : `0 15px 35px rgba(0,0,0,0.7)`
+              }}
+            >
+              <img
+                src={personaImage}
+                alt={introData.title}
+                className={`w-full h-full object-cover object-top transition-transform duration-700 ${
+                  isSpeaking ? 'scale-105 brightness-105' : 'group-hover:scale-105'
+                }`}
+              />
+
+              {/* Gradient Scrim for Editorial Typography */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+
+              {/* Badge Overlay */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs">
+                <span className="font-bold text-white tracking-wider uppercase text-sm">
+                  {introData.title}
+                </span>
+                <span
+                  className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest"
+                  style={{
+                    backgroundColor: isSpeaking ? theme.accent : 'rgba(0,0,0,0.6)',
+                    color: isSpeaking ? '#000000' : theme.accent,
+                    border: `1px solid ${theme.accent}55`
+                  }}
+                >
+                  {isSpeaking ? '● SPEAKING' : 'AUDIO READY'}
+                </span>
+              </div>
+            </div>
+          </GlowingHalo>
+        </div>
+
+        {/* Bottom Voice Controller */}
+        <div className="relative z-20 flex flex-col sm:flex-row items-center justify-between gap-3 bg-black/80 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-white/10">
+          <div className="flex items-center space-x-2 w-full sm:w-auto">
+            <button
+              onClick={toggleSpeech}
+              onMouseEnter={() => soundFX.playHover()}
+              className="flex-1 sm:flex-initial flex items-center justify-center space-x-2.5 px-5 py-2.5 rounded-xl font-mono text-xs uppercase font-bold tracking-wider transition-all duration-300 shadow-lg cursor-pointer"
+              style={{
+                backgroundColor: theme.accent,
+                color: '#000000'
+              }}
+            >
+              {isSpeaking ? (
+                <>
+                  <Pause className="w-4 h-4" />
+                  <span>Pause Voice</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-4 h-4" />
+                  <span>Hear Introduction</span>
+                </>
+              )}
+            </button>
+
+            {isSpeaking && (
+              <button
+                onClick={replaySpeech}
+                onMouseEnter={() => soundFX.playHover()}
+                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
+                title="Restart Voice"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
             )}
-          </button>
+          </div>
 
           {/* Dynamic Frequency Bars */}
-          <div className="flex items-center space-x-1 px-3">
+          <div className="flex items-center space-x-1 px-2">
             {[14, 28, 42, 22, 36, 18, 30, 24, 38, 16].map((height, i) => (
               <span
                 key={i}
                 className="w-1 rounded-full transition-all duration-150"
                 style={{
                   height: isSpeaking ? `${Math.max(6, Math.random() * height)}px` : '4px',
-                  backgroundColor: isSpeaking ? theme.accent : 'rgba(255,255,255,0.25)'
+                  backgroundColor: isSpeaking ? theme.accent : 'rgba(255,255,255,0.2)'
                 }}
               />
             ))}
@@ -220,75 +203,86 @@ export default function PersonaCharacter3D({
       </div>
 
       {/* =========================================================================
-          RIGHT: EDITORIAL SPEECH BUBBLE & QUICK SUB-PORTFOLIO GUIDE
+          RIGHT: EDITORIAL SPEECH TELEPROMPTER & INTERACTIVE SUB-PORTFOLIO NAV
       ========================================================================== */}
-      <div className="lg:col-span-5 space-y-6">
+      <div className="lg:col-span-7 space-y-6">
         
+        {/* Synchronized Teleprompter / Speech Bubble */}
         <div
           className="relative p-6 sm:p-8 rounded-3xl border transition-all duration-300 space-y-4"
           style={{
             backgroundColor: theme.panelBg,
             borderColor: isSpeaking ? theme.accent : theme.border,
-            boxShadow: isSpeaking ? `0 0 35px ${theme.glow}` : 'none'
+            boxShadow: isSpeaking ? `0 0 30px ${theme.accent}15` : 'none'
           }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between font-mono text-xs">
-            <span className="text-white font-bold uppercase tracking-widest flex items-center space-x-2">
-              <span style={{ color: theme.accent }}>✦</span>
-              <span>{introData.greeting}</span>
+          <div className="flex items-center justify-between font-mono text-xs pb-3 border-b border-white/[0.08]">
+            <span className="text-zinc-400 uppercase tracking-widest flex items-center space-x-2">
+              <Volume2 className="w-3.5 h-3.5" style={{ color: theme.accent }} />
+              <span>Official Introduction Teleprompter</span>
             </span>
             <span
-              className="text-[10px] font-mono px-2 py-0.5 rounded uppercase font-bold"
+              className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded"
               style={{
-                backgroundColor: `${theme.primary}30`,
-                color: theme.primaryLight
+                backgroundColor: `${theme.accent}15`,
+                color: theme.accent
               }}
             >
-              Verified Voice Dossier
+              {isSpeaking ? 'Live Narration' : 'Click "Hear Introduction" Above'}
             </span>
           </div>
 
-          {/* Dialogue Message */}
-          <p className="font-sans text-base sm:text-lg text-zinc-200 leading-relaxed font-light italic">
+          {/* Transcript / Spoken Message */}
+          <p className="font-editorial text-lg sm:text-2xl text-white leading-relaxed font-light">
             "{introData.message}"
           </p>
 
-          {/* Navigation Directory Pills */}
-          <div className="pt-4 border-t border-white/10 space-y-2">
-            <div className="font-mono text-[10px] text-zinc-400 uppercase tracking-widest">
-              Direct Sub-Portfolio Navigation:
-            </div>
-            <div className="grid grid-cols-2 gap-2 font-mono text-xs">
+          <div className="pt-2 flex items-center justify-between font-mono text-[11px] text-zinc-400">
+            <span>Voice Guide: Clear synthesized acoustic profile</span>
+            <span style={{ color: theme.accent }}>● 100% Subtitled</span>
+          </div>
+        </div>
+
+        {/* Quick Subpage Routing Portal */}
+        <div
+          className="p-6 sm:p-8 rounded-3xl border space-y-4"
+          style={{
+            backgroundColor: theme.panelBg,
+            borderColor: theme.border
+          }}
+        >
+          <div className="flex items-center justify-between font-mono text-xs">
+            <span className="uppercase tracking-widest text-zinc-400">
+              Explore {introData.title}'s 5-Section Dossier:
+            </span>
+            <span className="text-zinc-400">Jump directly to:</span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+            {[
+              { id: 'journey', label: '01. Journey', sub: '3D GSAP Timeline' },
+              { id: 'career', label: '02. Career', sub: 'Interactive Metrics' },
+              { id: 'about', label: '03. About', sub: 'Split Editorial' },
+              { id: 'contact', label: '04. Contact', sub: 'PR & Glass Form' }
+            ].map((item) => (
               <button
-                onClick={() => onNavigate('journey')}
-                className="px-3 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 border border-white/10 text-left text-zinc-300 hover:text-white transition-all flex items-center justify-between"
+                key={item.id}
+                onClick={() => {
+                  soundFX.playTransition();
+                  onNavigate(item.id);
+                }}
+                onMouseEnter={() => soundFX.playHover()}
+                className="p-3.5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.08] border border-white/5 hover:border-white/20 transition-all text-left group cursor-pointer"
               >
-                <span>01. Journey</span>
-                <Navigation className="w-3.5 h-3.5 text-zinc-400" />
+                <span className="block font-bold text-white group-hover:text-amber-300 transition-colors">
+                  {item.label}
+                </span>
+                <span className="block text-[10px] text-zinc-400 mt-0.5">
+                  {item.sub}
+                </span>
               </button>
-              <button
-                onClick={() => onNavigate('career')}
-                className="px-3 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 border border-white/10 text-left text-zinc-300 hover:text-white transition-all flex items-center justify-between"
-              >
-                <span>02. Career</span>
-                <Navigation className="w-3.5 h-3.5 text-zinc-400" />
-              </button>
-              <button
-                onClick={() => onNavigate('about')}
-                className="px-3 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 border border-white/10 text-left text-zinc-300 hover:text-white transition-all flex items-center justify-between"
-              >
-                <span>03. About</span>
-                <Navigation className="w-3.5 h-3.5 text-zinc-400" />
-              </button>
-              <button
-                onClick={() => onNavigate('contact')}
-                className="px-3 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 border border-white/10 text-left text-zinc-300 hover:text-white transition-all flex items-center justify-between"
-              >
-                <span>04. Contact</span>
-                <Navigation className="w-3.5 h-3.5 text-zinc-400" />
-              </button>
-            </div>
+            ))}
           </div>
         </div>
 

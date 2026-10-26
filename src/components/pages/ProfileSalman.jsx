@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowLeft, ArrowRight, Heart, Star, Film, Award, CheckCircle2, Tv, Calendar, MapPin, Sparkles } from 'lucide-react';
 import { soundFX } from '../../utils/soundFX';
 import { PROFILES_DATA } from '../../data/profilesData';
-import Salman3D from '../3d/Salman3D';
 
 export default function ProfileSalman({ setCurrentPage }) {
   const profile = PROFILES_DATA.salman;
@@ -85,15 +84,26 @@ export default function ProfileSalman({ setCurrentPage }) {
             </div>
           </div>
 
-          {/* 3D Interactive Feature Pillar */}
+          {/* Executive Feature Portrait Pillar */}
           <div className="lg:col-span-5">
             <div className="relative p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0c181d] via-[#091114] to-[#060a0c] border border-teal-500/30 shadow-2xl overflow-hidden group">
-              <div className="absolute top-4 right-4 font-mono text-[10px] text-teal-400 tracking-widest uppercase">
-                WebGL Chrome Artifact
+              <div className="absolute top-4 right-4 z-20 font-mono text-[10px] text-teal-400 tracking-widest uppercase px-2.5 py-1 rounded bg-black/60 border border-teal-500/30">
+                Being Human Sovereign
               </div>
-              <Salman3D hovered={true} className="h-80 w-full" />
+              <div className="relative h-80 w-full rounded-2xl overflow-hidden border border-white/10">
+                <img
+                  src="/images/salman/salman-navy-formal.jpg"
+                  alt="Salman Khan Navy Formal Portrait"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-75" />
+                <div className="absolute bottom-3 left-3 right-3 font-mono text-xs text-white font-bold flex items-center justify-between">
+                  <span>SALMAN KHAN</span>
+                  <span className="text-teal-400">★ BEING HUMAN TITAN</span>
+                </div>
+              </div>
               <div className="mt-4 pt-4 border-t border-white/[0.08] text-center font-mono text-xs text-zinc-400">
-                "The Star of Benevolence" • Signature Turquoise Nucleus
+                "The Star of Benevolence" • Signature Humanitarian Archive
               </div>
             </div>
           </div>
