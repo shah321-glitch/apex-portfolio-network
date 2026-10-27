@@ -120,11 +120,16 @@ export default function PersonaPortfolioView({
   const galleryItems = getGalleryItems();
 
   return (
+    <div
+      className="min-h-screen text-[#f1f1f5] pb-24 transition-colors duration-500"
+      style={{ backgroundColor: profile.theme.bgDark }}
+    >
     <div className="min-h-screen text-[#0f132a] pb-24 transition-colors duration-500">
       
       {/* =========================================================================
           PERSISTENT SUB-PORTFOLIO NAVIGATION HEADER
       ========================================================================== */}
+      <div className="sticky top-20 z-40 backdrop-blur-xl border-b border-white/[0.08] bg-black/80">
       <div className="sticky top-20 z-40 backdrop-blur-xl border-b border-[#C1C6EB] bg-[#DDE0F8]/90 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:h-16 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           
@@ -133,17 +138,20 @@ export default function PersonaPortfolioView({
             <button
               onClick={onBackToHub}
               onMouseEnter={() => soundFX.playHover()}
+              className="flex items-center space-x-1.5 uppercase tracking-wider text-zinc-400 hover:text-white transition-colors cursor-pointer"
               className="flex items-center space-x-1.5 uppercase tracking-wider text-[#434975] hover:text-[#0f132a] transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Main Hub</span>
             </button>
+            <span className="text-zinc-600">/</span>
             <span className="text-[#8e95c4]">/</span>
             <div className="flex items-center space-x-2">
               <span
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: profile.theme.accent }}
               />
+              <span className="text-white font-bold tracking-wider uppercase truncate max-w-[180px] sm:max-w-none">
               <span className="text-[#0f132a] font-bold tracking-wider uppercase truncate max-w-[180px] sm:max-w-none">
                 {profile.name}
               </span>
@@ -168,13 +176,17 @@ export default function PersonaPortfolioView({
                   onMouseEnter={() => soundFX.playHover()}
                   className={`whitespace-nowrap px-3 sm:px-4 py-1.5 rounded-full uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                     active
+                      ? 'text-black font-bold shadow-md'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/[0.05]'
                       ? 'text-white font-bold shadow-md'
                       : 'text-[#434975] hover:text-[#0f132a] hover:bg-white/60'
                   }`}
                   style={{
+                    backgroundColor: active ? profile.theme.accent : 'transparent'
                     backgroundColor: active ? activeBg : 'transparent'
                   }}
                 >
+                  <span className="opacity-60 mr-1 hidden md:inline">0{idx}.</span>
                   <span className="opacity-70 mr-1 hidden md:inline">0{idx}.</span>
                   <span>{tab.label}</span>
                 </button>
@@ -203,6 +215,7 @@ export default function PersonaPortfolioView({
               <span>{profile.currentOffice}</span>
             </div>
 
+            <h1 className="font-editorial text-5xl sm:text-7xl lg:text-9xl font-black uppercase tracking-tight text-white leading-[0.88]">
             <h1 className="font-editorial text-5xl sm:text-7xl lg:text-9xl font-black uppercase tracking-tight text-[#0f132a] leading-[0.88]">
               {profile.shortName} <br />
               <span
@@ -213,6 +226,7 @@ export default function PersonaPortfolioView({
               </span>
             </h1>
 
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-6 font-mono text-xs text-zinc-400 border-y border-white/[0.08] py-3">
             <div className="flex flex-wrap items-center gap-y-2 gap-x-6 font-mono text-xs text-[#434975] border-y border-[#C1C6EB] py-3">
               <span><strong>LEGAL:</strong> {profile.bornName}</span>
               <span>•</span>
@@ -238,9 +252,16 @@ export default function PersonaPortfolioView({
           {/* Executive Photographic Archive Banner */}
           {galleryItems.length > 0 && (
             <div
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 rounded-3xl border"
+              style={{
+                backgroundColor: profile.theme.panelBg,
+                borderColor: profile.theme.border
+              }}
               className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 rounded-3xl border bg-white/80 border-[#C1C6EB] shadow-lg"
             >
               <div
+                className="lg:col-span-5 relative group overflow-hidden rounded-2xl border max-h-[460px]"
+                style={{ borderColor: profile.theme.border }}
                 className="lg:col-span-5 relative group overflow-hidden rounded-2xl border border-[#C1C6EB] max-h-[460px] shadow-md"
               >
                 <img
@@ -251,6 +272,7 @@ export default function PersonaPortfolioView({
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
                 <div className="absolute bottom-4 left-4 right-4 font-mono text-xs">
                   <div
+                    className="text-[10px] uppercase tracking-widest"
                     className="text-[10px] uppercase tracking-widest font-bold"
                     style={{ color: profile.theme.accent }}
                   >
@@ -265,14 +287,17 @@ export default function PersonaPortfolioView({
               <div className="lg:col-span-7 space-y-6">
                 <div>
                   <span
+                    className="font-mono text-xs uppercase tracking-widest"
                     className="font-mono text-xs uppercase tracking-widest font-bold"
                     style={{ color: profile.theme.accent }}
                   >
                     PHOTOGRAPHIC DOSSIER
                   </span>
+                  <h3 className="font-editorial text-3xl sm:text-4xl font-bold uppercase text-white mt-1">
                   <h3 className="font-editorial text-3xl sm:text-4xl font-bold uppercase text-[#0f132a] mt-1">
                     Authentic Visual Chronicle
                   </h3>
+                  <p className="font-sans text-sm sm:text-base text-zinc-300 font-light leading-relaxed mt-3">
                   <p className="font-sans text-sm sm:text-base text-[#262c4c] font-light leading-relaxed mt-3">
                     High-contrast editorial portraits capturing the personal style, public authority, and cultural gravitas of {profile.name}.
                   </p>
@@ -280,6 +305,7 @@ export default function PersonaPortfolioView({
 
                 {/* Interactive Thumbnail Selector Strip */}
                 <div className="space-y-2">
+                  <div className="font-mono text-[11px] text-zinc-400 uppercase tracking-widest flex items-center space-x-2">
                   <div className="font-mono text-[11px] text-[#434975] uppercase tracking-widest flex items-center space-x-2 font-semibold">
                     <Camera className="w-3.5 h-3.5" style={{ color: profile.theme.accent }} />
                     <span>Select Portrait to Inspect:</span>
@@ -295,10 +321,13 @@ export default function PersonaPortfolioView({
                         onMouseEnter={() => soundFX.playHover()}
                         className={`group relative rounded-xl overflow-hidden border-2 transition-all w-20 sm:w-24 aspect-[3/4] ${
                           (activePhoto || galleryItems[0].src) === item.src
+                            ? 'scale-105 shadow-lg'
+                            : 'border-white/10 hover:border-white/40 opacity-70 hover:opacity-100'
                             ? 'scale-105 shadow-lg border-indigo-600'
                             : 'border-[#C1C6EB] hover:border-indigo-400 opacity-80 hover:opacity-100'
                         }`}
                         style={{
+                          borderColor: (activePhoto || galleryItems[0].src) === item.src ? profile.theme.accent : 'rgba(255,255,255,0.1)'
                           borderColor: (activePhoto || galleryItems[0].src) === item.src ? profile.theme.accent : undefined
                         }}
                       >
@@ -307,6 +336,8 @@ export default function PersonaPortfolioView({
                           alt={item.label}
                           className="w-full h-full object-cover object-top"
                         />
+                        <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors" />
+                        <span className="absolute bottom-1 left-1 right-1 text-[8px] font-mono text-center text-white/90 bg-black/60 rounded px-1 truncate">
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors" />
                         <span className="absolute bottom-1 left-1 right-1 text-[8px] font-mono text-center text-white/95 bg-black/70 rounded px-1 truncate">
                           {item.label}
@@ -324,8 +355,10 @@ export default function PersonaPortfolioView({
             {profile.careerStats.map((s, idx) => (
               <div
                 key={idx}
+                className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20 transition-all"
                 className="p-6 rounded-2xl bg-white/80 border border-[#C1C6EB] hover:border-[#4f46e5]/40 transition-all shadow-sm"
               >
+                <div className="text-[10px] text-zinc-400 tracking-widest uppercase">
                 <div className="text-[10px] text-[#515987] tracking-widest uppercase font-semibold">
                   {s.label}
                 </div>
@@ -335,6 +368,7 @@ export default function PersonaPortfolioView({
                 >
                   {s.metric}
                 </div>
+                <div className="text-xs text-zinc-400 mt-1 font-sans">
                 <div className="text-xs text-[#262c4c] mt-1 font-sans">
                   {s.detail}
                 </div>
@@ -343,11 +377,14 @@ export default function PersonaPortfolioView({
           </div>
 
           {/* CTA Row to Journey & Career */}
+          <div className="flex flex-col sm:flex-row items-center justify-between p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] gap-4">
           <div className="flex flex-col sm:flex-row items-center justify-between p-8 rounded-3xl bg-white/80 border border-[#C1C6EB] gap-4 shadow-sm">
             <div>
+              <div className="font-editorial text-xl font-bold text-white uppercase">
               <div className="font-editorial text-xl font-bold text-[#0f132a] uppercase">
                 Explore the Complete Chronological Dossier
               </div>
+              <div className="font-mono text-xs text-zinc-400 mt-1">
               <div className="font-mono text-xs text-[#515987] mt-1">
                 Scroll-triggered 3D vertical timeline from early childhood to 2026.
               </div>
@@ -355,6 +392,8 @@ export default function PersonaPortfolioView({
             <button
               onClick={() => handleNav('journey')}
               onMouseEnter={() => soundFX.playHover()}
+              className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-black transition-all flex items-center space-x-3"
+              style={{ backgroundColor: profile.theme.accent }}
               className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-white transition-all flex items-center space-x-3 shadow-md"
               style={{ backgroundColor: personId === 'vijay' ? '#dc2626' : personId === 'pavel' ? '#0284c7' : '#d97706' }}
             >
@@ -381,9 +420,11 @@ export default function PersonaPortfolioView({
               >
                 CHRONOLOGICAL 3D TRAJECTORY
               </span>
+              <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-white">
               <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-[#0f132a]">
                 The Journey: Childhood to 2026 Status
               </h2>
+              <p className="font-sans text-base text-zinc-400 font-light max-w-2xl">
               <p className="font-sans text-base text-[#262c4c] font-light max-w-2xl">
                 An interactive vertical progression detailing the defining life phases, breakthroughs, and sovereign moments of {profile.name}.
               </p>
@@ -392,6 +433,8 @@ export default function PersonaPortfolioView({
             {profile.images && (
               <div className="lg:col-span-4 flex justify-end">
                 <div
+                  className="relative rounded-2xl overflow-hidden border max-w-[240px] shadow-2xl group"
+                  style={{ borderColor: profile.theme.border }}
                   className="relative rounded-2xl overflow-hidden border border-[#C1C6EB] max-w-[240px] shadow-2xl group"
                 >
                   <img
@@ -414,14 +457,17 @@ export default function PersonaPortfolioView({
           </div>
 
           {/* Vertical 3D Timeline Container */}
+          <div className="relative pl-6 sm:pl-10 space-y-12 before:absolute before:inset-0 before:left-3 sm:before:left-5 before:w-[2px] before:bg-gradient-to-b before:from-white/30 before:via-white/10 before:to-transparent">
           <div className="relative pl-6 sm:pl-10 space-y-12 before:absolute before:inset-0 before:left-3 sm:before:left-5 before:w-[2px] before:bg-gradient-to-b before:from-indigo-400 before:via-[#C1C6EB] before:to-transparent">
             {profile.journeyMilestones.map((m, idx) => (
               <div key={idx} className="relative group">
                 
                 {/* Node Dot / 3D Marker */}
                 <div
+                  className="absolute -left-6 sm:-left-10 top-2 w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-125"
                   className="absolute -left-6 sm:-left-10 top-2 w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 group-hover:scale-125 bg-white"
                   style={{
+                    backgroundColor: profile.theme.bgDark,
                     borderColor: profile.theme.accent
                   }}
                 >
@@ -434,6 +480,7 @@ export default function PersonaPortfolioView({
                 {/* 3D Milestone Card */}
                 <InteractiveTiltCard
                   accentColor={profile.theme.accent}
+                  className="p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/20"
                   className="p-6 sm:p-8 rounded-3xl bg-white/80 border border-[#C1C6EB] hover:border-indigo-400 shadow-md"
                 >
                   <div className="space-y-3">
@@ -447,18 +494,22 @@ export default function PersonaPortfolioView({
                       >
                         {m.phase}
                       </span>
+                      <span className="text-zinc-400 tracking-wider">
                       <span className="text-[#515987] font-semibold tracking-wider">
                         {m.year}
                       </span>
                     </div>
 
+                    <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white uppercase group-hover:text-amber-200 transition-colors">
                     <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#0f132a] uppercase group-hover:text-indigo-900 transition-colors">
                       {m.title}
                     </h3>
+                    <div className="font-mono text-xs text-zinc-400 uppercase tracking-widest">
                     <div className="font-mono text-xs text-[#515987] uppercase tracking-widest font-semibold">
                       {m.subtitle}
                     </div>
 
+                    <p className="font-sans text-sm sm:text-base text-zinc-300 font-light leading-relaxed pt-2">
                     <p className="font-sans text-sm sm:text-base text-[#262c4c] font-light leading-relaxed pt-2">
                       {m.desc}
                     </p>
@@ -473,6 +524,8 @@ export default function PersonaPortfolioView({
           <div className="pt-8 flex justify-end">
             <button
               onClick={() => handleNav('career')}
+              className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-black flex items-center space-x-3"
+              style={{ backgroundColor: profile.theme.accent }}
               className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-white flex items-center space-x-3 shadow-md"
               style={{ backgroundColor: personId === 'vijay' ? '#dc2626' : personId === 'pavel' ? '#0284c7' : '#d97706' }}
             >
@@ -492,14 +545,17 @@ export default function PersonaPortfolioView({
           
           <div className="space-y-3">
             <span
+              className="font-mono text-xs uppercase tracking-widest"
               className="font-mono text-xs uppercase tracking-widest font-bold"
               style={{ color: profile.theme.accent }}
             >
               DATA GRIDS & RECORDS
             </span>
+            <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-white">
             <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-[#0f132a]">
               Career Achievements & Structural Milestones
             </h2>
+            <p className="font-sans text-base text-zinc-400 font-light max-w-2xl">
             <p className="font-sans text-base text-[#262c4c] font-light max-w-2xl">
               Comprehensive statistical documentation across box office supremacy, software infrastructure, and electoral triumphs.
             </p>
@@ -510,17 +566,21 @@ export default function PersonaPortfolioView({
             {profile.careerStats.map((stat, idx) => (
               <div
                 key={idx}
+                className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] relative overflow-hidden"
                 className="p-8 rounded-3xl bg-white/80 border border-[#C1C6EB] relative overflow-hidden shadow-sm"
               >
+                <div className="text-[11px] text-zinc-400 uppercase tracking-widest">
                 <div className="text-[11px] text-[#515987] uppercase tracking-widest font-semibold">
                   {stat.label}
                 </div>
                 <div
+                  className="text-4xl sm:text-5xl font-bold text-white mt-3"
                   className="text-4xl sm:text-5xl font-bold text-[#0f132a] mt-3"
                   style={{ color: profile.theme.accent }}
                 >
                   {stat.metric}
                 </div>
+                <div className="text-xs text-zinc-400 mt-2 font-sans font-light">
                 <div className="text-xs text-[#262c4c] mt-2 font-sans font-light">
                   {stat.detail}
                 </div>
@@ -533,10 +593,12 @@ export default function PersonaPortfolioView({
             {profile.careerCategories.map((cat, idx) => (
               <div
                 key={idx}
+                className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] space-y-6 relative overflow-hidden"
                 className="p-8 rounded-3xl bg-white/80 border border-[#C1C6EB] space-y-6 relative overflow-hidden shadow-md"
               >
                 {/* Embed Persona Image in First Category */}
                 {profile.images && idx === 0 && (
+                  <div className="flex items-center space-x-4 p-4 rounded-2xl bg-black/40 border border-white/10">
                   <div className="flex items-center space-x-4 p-4 rounded-2xl bg-white/90 border border-[#C1C6EB] shadow-xs">
                     <img
                       src={
@@ -551,6 +613,7 @@ export default function PersonaPortfolioView({
                     />
                     <div>
                       <div
+                        className="font-mono text-[10px] uppercase tracking-widest"
                         className="font-mono text-[10px] uppercase tracking-widest font-bold"
                         style={{ color: profile.theme.accent }}
                       >
@@ -558,6 +621,7 @@ export default function PersonaPortfolioView({
                         {personId === 'pavel' && '950M+ CITADEL INFRASTRUCTURE'}
                         {personId === 'salman' && '₹3,000CR+ ALL-TIME BLOCKBUSTERS'}
                       </div>
+                      <div className="font-editorial text-base font-bold text-white">
                       <div className="font-editorial text-base font-bold text-[#0f132a]">
                         {cat.name}
                       </div>
@@ -565,11 +629,13 @@ export default function PersonaPortfolioView({
                   </div>
                 )}
 
+                <div className="flex items-center space-x-3 border-b border-white/[0.08] pb-4">
                 <div className="flex items-center space-x-3 border-b border-[#C1C6EB] pb-4">
                   <Award
                     className="w-5 h-5"
                     style={{ color: profile.theme.accent }}
                   />
+                  <h3 className="font-editorial text-xl font-bold uppercase text-white">
                   <h3 className="font-editorial text-xl font-bold uppercase text-[#0f132a]">
                     {cat.name}
                   </h3>
@@ -579,11 +645,14 @@ export default function PersonaPortfolioView({
                   {cat.items.map((item, itemIdx) => (
                     <div
                       key={itemIdx}
+                      className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/20 transition-all space-y-1"
                       className="p-4 rounded-2xl bg-white/70 border border-[#C1C6EB]/60 hover:border-indigo-400 transition-all space-y-1 shadow-2xs"
                     >
+                      <div className="font-editorial text-base font-bold text-white">
                       <div className="font-editorial text-base font-bold text-[#0f132a]">
                         {item.title}
                       </div>
+                      <div className="font-mono text-xs text-zinc-400">
                       <div className="font-mono text-xs text-[#515987]">
                         {item.note}
                       </div>
@@ -598,6 +667,8 @@ export default function PersonaPortfolioView({
           <div className="pt-8 flex justify-end">
             <button
               onClick={() => handleNav('about')}
+              className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-black flex items-center space-x-3"
+              style={{ backgroundColor: profile.theme.accent }}
               className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-white flex items-center space-x-3 shadow-md"
               style={{ backgroundColor: personId === 'vijay' ? '#dc2626' : personId === 'pavel' ? '#0284c7' : '#d97706' }}
             >
@@ -617,14 +688,17 @@ export default function PersonaPortfolioView({
           
           <div className="space-y-3">
             <span
+              className="font-mono text-xs uppercase tracking-widest"
               className="font-mono text-xs uppercase tracking-widest font-bold"
               style={{ color: profile.theme.accent }}
             >
               SPLIT-SCREEN EDITORIAL
             </span>
+            <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-white">
             <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-[#0f132a]">
               Genesis, Education & Social Missions
             </h2>
+            <p className="font-sans text-base text-zinc-400 font-light max-w-2xl">
             <p className="font-sans text-base text-[#262c4c] font-light max-w-2xl">
               An intimate biographical inquiry into early upbringing, intellectual conditioning, and transformative philanthropic enterprises.
             </p>
@@ -635,11 +709,14 @@ export default function PersonaPortfolioView({
             
             {/* Left Screen: Early Life & Education */}
             <div className="lg:col-span-6 space-y-8">
+              <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] space-y-6">
               <div className="p-8 rounded-3xl bg-white/80 border border-[#C1C6EB] space-y-6 shadow-md">
                 
                 {/* Embed Early Roots / Intellectual Genesis Portrait - PERFECT FACIAL FRAMING */}
                 {profile.images && (
                   <div
+                    className="relative rounded-2xl overflow-hidden border aspect-[4/5] sm:aspect-[3/4] max-w-sm sm:max-w-md mx-auto mb-6 group shadow-2xl bg-black/60"
+                    style={{ borderColor: profile.theme.border }}
                     className="relative rounded-2xl overflow-hidden border border-[#C1C6EB] aspect-[4/5] sm:aspect-[3/4] max-w-sm sm:max-w-md mx-auto mb-6 group shadow-2xl bg-black/60"
                   >
                     <img
@@ -650,15 +727,19 @@ export default function PersonaPortfolioView({
                         profile.images.primary
                       }
                       alt={`${profile.name} Roots`}
+                      className="w-full h-full object-cover object-[center_15%] group-hover:scale-105 transition-transform duration-700"
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
                     <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-xs">
                       <span
+                        className="font-bold tracking-wider"
+                        style={{ color: profile.theme.primaryLight }}
                         className="font-bold tracking-wider text-white"
                       >
                         EARLY ROOTS & INTELLECTUAL GENESIS
                       </span>
+                      <span className="text-[10px] text-zinc-400 uppercase tracking-widest hidden sm:inline">
                       <span className="text-[10px] text-zinc-300 uppercase tracking-widest hidden sm:inline">
                         HISTORICAL ARCHIVE
                       </span>
@@ -666,6 +747,7 @@ export default function PersonaPortfolioView({
                   </div>
                 )}
 
+                <div className="flex items-center space-x-3 text-white">
                 <div className="flex items-center space-x-3 text-[#0f132a]">
                   <GraduationCap
                     className="w-5 h-5"
@@ -676,14 +758,18 @@ export default function PersonaPortfolioView({
                   </h3>
                 </div>
 
+                <p className="font-sans text-base text-zinc-300 leading-relaxed font-light">
                 <p className="font-sans text-base text-[#262c4c] leading-relaxed font-light">
                   {profile.aboutData.earlyLife}
                 </p>
 
+                <div className="pt-4 border-t border-white/[0.08] space-y-2">
+                  <div className="font-mono text-xs uppercase tracking-widest text-zinc-400">
                 <div className="pt-4 border-t border-[#C1C6EB] space-y-2">
                   <div className="font-mono text-xs uppercase tracking-widest text-[#515987] font-semibold">
                     Academic Background & Training
                   </div>
+                  <p className="font-sans text-sm text-zinc-300 leading-relaxed font-light">
                   <p className="font-sans text-sm text-[#262c4c] leading-relaxed font-light">
                     {profile.aboutData.education}
                   </p>
@@ -694,11 +780,19 @@ export default function PersonaPortfolioView({
             {/* Right Screen: Social Work & Philanthropy (TVK Welfare / Being Human / Privacy) */}
             <div className="lg:col-span-6 space-y-8">
               <div
+                className="p-8 rounded-3xl border space-y-6"
+                style={{
+                  backgroundColor: profile.theme.panelBg,
+                  borderColor: profile.theme.border
+                }}
                 className="p-8 rounded-3xl bg-white/80 border border-[#C1C6EB] space-y-6 shadow-md"
               >
+                {/* Embed Public Welfare / Leadership Portrait - PERFECT FACIAL FRAMING */}
                 {/* Embed Public Welfare / Leadership Portrait - PERFECT FACIAL FRAMING (Face Fully Visible) */}
                 {profile.images && (
                   <div
+                    className="relative rounded-2xl overflow-hidden border aspect-[4/5] sm:aspect-[3/4] max-w-sm sm:max-w-md mx-auto mb-6 group shadow-2xl bg-black/60"
+                    style={{ borderColor: profile.theme.border }}
                     className="relative rounded-2xl overflow-hidden border border-[#C1C6EB] aspect-[4/5] sm:aspect-[3/4] max-w-sm sm:max-w-md mx-auto mb-6 group shadow-2xl bg-black/60"
                   >
                     <img
@@ -709,15 +803,19 @@ export default function PersonaPortfolioView({
                         profile.images.primary
                       }
                       alt={`${profile.name} Welfare & Mission`}
+                      className="w-full h-full object-cover object-[center_12%] group-hover:scale-105 transition-transform duration-700"
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
                     <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-xs">
                       <span
+                        className="font-bold tracking-wider"
+                        style={{ color: profile.theme.accent }}
                         className="font-bold tracking-wider text-white"
                       >
                         HUMANITARIAN MISSION & MANDATE
                       </span>
+                      <span className="text-[10px] text-zinc-400 uppercase tracking-widest hidden sm:inline">
                       <span className="text-[10px] text-zinc-300 uppercase tracking-widest hidden sm:inline">
                         PUBLIC RECORD
                       </span>
@@ -725,6 +823,7 @@ export default function PersonaPortfolioView({
                   </div>
                 )}
 
+                <div className="flex items-center space-x-3 text-white">
                 <div className="flex items-center space-x-3 text-[#0f132a]">
                   <Heart
                     className="w-5 h-5"
@@ -735,12 +834,16 @@ export default function PersonaPortfolioView({
                   </h3>
                 </div>
 
+                <p className="font-sans text-base text-zinc-200 leading-relaxed font-light">
                 <p className="font-sans text-base text-[#262c4c] leading-relaxed font-light">
                   {profile.aboutData.socialWork}
                 </p>
 
+                <div className="pt-4 border-t border-white/10 flex items-center space-x-3 font-mono text-xs text-zinc-400">
                 <div className="pt-4 border-t border-[#C1C6EB] flex items-center space-x-3 font-mono text-xs text-[#515987] font-semibold">
                   <CheckCircle2
+                    className="w-4 h-4"
+                    style={{ color: profile.theme.accent }}
                     className="w-4 h-4 text-emerald-600"
                   />
                   <span>Verified Public & Humanitarian Impact Record</span>
@@ -754,6 +857,8 @@ export default function PersonaPortfolioView({
           <div className="pt-8 flex justify-end">
             <button
               onClick={() => handleNav('contact')}
+              className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-black flex items-center space-x-3"
+              style={{ backgroundColor: profile.theme.accent }}
               className="px-8 py-3.5 rounded-full font-mono text-xs font-bold uppercase tracking-wider text-white flex items-center space-x-3 shadow-md"
               style={{ backgroundColor: personId === 'vijay' ? '#dc2626' : personId === 'pavel' ? '#0284c7' : '#d97706' }}
             >
@@ -773,14 +878,17 @@ export default function PersonaPortfolioView({
           
           <div className="space-y-3">
             <span
+              className="font-mono text-xs uppercase tracking-widest"
               className="font-mono text-xs uppercase tracking-widest font-bold"
               style={{ color: profile.theme.accent }}
             >
               OFFICIAL INQUIRIES & PR
             </span>
+            <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-white">
             <h2 className="font-editorial text-4xl sm:text-6xl font-bold uppercase text-[#0f132a]">
               Connect With {profile.name}
             </h2>
+            <p className="font-sans text-base text-zinc-400 font-light max-w-2xl">
             <p className="font-sans text-base text-[#262c4c] font-light max-w-2xl">
               Direct institutional protocol for press credentials, executive proposals, and verified communication.
             </p>
@@ -792,21 +900,28 @@ export default function PersonaPortfolioView({
             <div className="lg:col-span-7">
               <form
                 onSubmit={handleFormSubmit}
+                className="p-8 sm:p-10 rounded-3xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-xl space-y-6"
                 className="p-8 sm:p-10 rounded-3xl bg-white/90 border border-[#C1C6EB] backdrop-blur-xl space-y-6 shadow-lg"
               >
+                <div className="font-mono text-xs uppercase tracking-widest text-zinc-400 pb-2 border-b border-white/[0.08] flex items-center justify-between">
                 <div className="font-mono text-xs uppercase tracking-widest text-[#515987] pb-2 border-b border-[#C1C6EB] flex items-center justify-between font-semibold">
                   <span>DISPATCH TRANSMISSION</span>
+                  <span className="text-emerald-400">SECURE ENCRYPTION</span>
                   <span className="text-emerald-600 font-bold">SECURE ENCRYPTION</span>
                 </div>
 
                 {formSubmitted ? (
                   <div className="py-16 text-center space-y-4">
                     <CheckCircle2
+                      className="w-12 h-12 mx-auto animate-bounce"
+                      style={{ color: profile.theme.accent }}
                       className="w-12 h-12 mx-auto animate-bounce text-emerald-600"
                     />
+                    <h4 className="font-editorial text-2xl font-bold text-white uppercase">
                     <h4 className="font-editorial text-2xl font-bold text-[#0f132a] uppercase">
                       Transmission Received
                     </h4>
+                    <p className="font-mono text-xs text-zinc-400 max-w-md mx-auto">
                     <p className="font-mono text-xs text-[#515987] max-w-md mx-auto">
                       Your dossier dispatch has been logged in the executive communication queue. Verified follow-up will be dispatched to your email.
                     </p>
@@ -815,10 +930,12 @@ export default function PersonaPortfolioView({
                   <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
+                        <label className="font-mono text-xs text-zinc-400 uppercase tracking-wider block">
                         <label className="font-mono text-xs text-[#515987] uppercase tracking-wider block font-semibold">
                           Full Name / Title
                         </label>
                         <div className="relative">
+                          <User className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
                           <User className="w-4 h-4 text-[#8e95c4] absolute left-3.5 top-3.5" />
                           <input
                             type="text"
@@ -826,16 +943,19 @@ export default function PersonaPortfolioView({
                             value={formState.name}
                             onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                             placeholder="e.g. Elena Rostova"
+                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-zinc-600 focus:outline-none focus:border-white/40 font-sans text-sm"
                             className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-[#C1C6EB] text-[#0f132a] placeholder-[#8e95c4] focus:outline-none focus:border-indigo-600 font-sans text-sm shadow-2xs"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-2">
+                        <label className="font-mono text-xs text-zinc-400 uppercase tracking-wider block">
                         <label className="font-mono text-xs text-[#515987] uppercase tracking-wider block font-semibold">
                           Organization / Media Outlet
                         </label>
                         <div className="relative">
+                          <Building className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
                           <Building className="w-4 h-4 text-[#8e95c4] absolute left-3.5 top-3.5" />
                           <input
                             type="text"
@@ -843,6 +963,7 @@ export default function PersonaPortfolioView({
                             value={formState.organization}
                             onChange={(e) => setFormState({ ...formState, organization: e.target.value })}
                             placeholder="e.g. Bloomberg / TVK Press"
+                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-zinc-600 focus:outline-none focus:border-white/40 font-sans text-sm"
                             className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-[#C1C6EB] text-[#0f132a] placeholder-[#8e95c4] focus:outline-none focus:border-indigo-600 font-sans text-sm shadow-2xs"
                           />
                         </div>
@@ -851,10 +972,12 @@ export default function PersonaPortfolioView({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
+                        <label className="font-mono text-xs text-zinc-400 uppercase tracking-wider block">
                         <label className="font-mono text-xs text-[#515987] uppercase tracking-wider block font-semibold">
                           Official Email
                         </label>
                         <div className="relative">
+                          <Mail className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
                           <Mail className="w-4 h-4 text-[#8e95c4] absolute left-3.5 top-3.5" />
                           <input
                             type="email"
@@ -862,18 +985,21 @@ export default function PersonaPortfolioView({
                             value={formState.email}
                             onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                             placeholder="press@domain.com"
+                            className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-zinc-600 focus:outline-none focus:border-white/40 font-sans text-sm"
                             className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-[#C1C6EB] text-[#0f132a] placeholder-[#8e95c4] focus:outline-none focus:border-indigo-600 font-sans text-sm shadow-2xs"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-2">
+                        <label className="font-mono text-xs text-zinc-400 uppercase tracking-wider block">
                         <label className="font-mono text-xs text-[#515987] uppercase tracking-wider block font-semibold">
                           Inquiry Nature
                         </label>
                         <select
                           value={formState.type}
                           onChange={(e) => setFormState({ ...formState, type: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl bg-[#0e0e12] border border-white/10 text-white focus:outline-none focus:border-white/40 font-sans text-sm"
                           className="w-full px-4 py-3 rounded-xl bg-white border border-[#C1C6EB] text-[#0f132a] focus:outline-none focus:border-indigo-600 font-sans text-sm shadow-2xs"
                         >
                           <option value="PR & Media">Press & Media Inquiries</option>
@@ -885,6 +1011,7 @@ export default function PersonaPortfolioView({
                     </div>
 
                     <div className="space-y-2">
+                      <label className="font-mono text-xs text-zinc-400 uppercase tracking-wider block">
                       <label className="font-mono text-xs text-[#515987] uppercase tracking-wider block font-semibold">
                         Transmission Dispatch Brief
                       </label>
@@ -894,6 +1021,7 @@ export default function PersonaPortfolioView({
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                         placeholder="Detail the scope of inquiry, deadline, and official credential references..."
+                        className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-zinc-600 focus:outline-none focus:border-white/40 font-sans text-sm"
                         className="w-full px-4 py-3 rounded-xl bg-white border border-[#C1C6EB] text-[#0f132a] placeholder-[#8e95c4] focus:outline-none focus:border-indigo-600 font-sans text-sm shadow-2xs"
                       />
                     </div>
@@ -901,6 +1029,8 @@ export default function PersonaPortfolioView({
                     <button
                       type="submit"
                       onMouseEnter={() => soundFX.playHover()}
+                      className="w-full py-4 rounded-xl font-mono text-xs font-bold uppercase tracking-widest text-black transition-all flex items-center justify-center space-x-2"
+                      style={{ backgroundColor: profile.theme.accent }}
                       className="w-full py-4 rounded-xl font-mono text-xs font-bold uppercase tracking-widest text-white transition-all flex items-center justify-center space-x-2 shadow-md cursor-pointer"
                       style={{ backgroundColor: personId === 'vijay' ? '#dc2626' : personId === 'pavel' ? '#0284c7' : '#d97706' }}
                     >
@@ -918,6 +1048,8 @@ export default function PersonaPortfolioView({
               {/* Embed Formal Bureau Photo */}
               {profile.images && (
                 <div
+                  className="relative rounded-3xl overflow-hidden border max-h-72 shadow-2xl group"
+                  style={{ borderColor: profile.theme.border }}
                   className="relative rounded-3xl overflow-hidden border border-[#C1C6EB] max-h-72 shadow-2xl group"
                 >
                   <img
@@ -943,6 +1075,8 @@ export default function PersonaPortfolioView({
                 </div>
               )}
 
+              <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] space-y-6">
+                <div className="font-mono text-xs uppercase tracking-widest text-zinc-400">
               <div className="p-8 rounded-3xl bg-white/80 border border-[#C1C6EB] space-y-6 shadow-md">
                 <div className="font-mono text-xs uppercase tracking-widest text-[#515987] font-semibold">
                   VERIFIED CHANNELS // BOLD TYPOGRAPHY
@@ -956,13 +1090,16 @@ export default function PersonaPortfolioView({
                       target="_blank"
                       rel="noopener noreferrer"
                       onMouseEnter={() => soundFX.playHover()}
+                      className="group flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/20 transition-all"
                       className="group flex items-center justify-between p-4 rounded-2xl bg-white/90 border border-[#C1C6EB] hover:border-indigo-500 transition-all shadow-2xs"
                     >
                       <div>
+                        <div className="font-mono text-[10px] text-zinc-400 uppercase">
                         <div className="font-mono text-[10px] text-[#515987] uppercase font-semibold">
                           {link.platform}
                         </div>
                         <div
+                          className="font-editorial text-lg font-bold group-hover:underline text-white"
                           className="font-editorial text-lg font-bold group-hover:underline text-[#0f132a]"
                         >
                           {link.handle}
@@ -977,15 +1114,19 @@ export default function PersonaPortfolioView({
                 </div>
 
                 {/* Headquarters Info */}
+                <div className="pt-4 border-t border-white/[0.08] space-y-2 font-mono text-xs text-zinc-400">
+                  <div className="text-white font-bold uppercase">
                 <div className="pt-4 border-t border-[#C1C6EB] space-y-2 font-mono text-xs text-[#515987]">
                   <div className="text-[#0f132a] font-bold uppercase">
                     {profile.contactInfo.office}
                   </div>
                   <div className="flex items-start space-x-2">
+                    <MapPin className="w-3.5 h-3.5 text-zinc-500 shrink-0 mt-0.5" />
                     <MapPin className="w-3.5 h-3.5 text-[#515987] shrink-0 mt-0.5" />
                     <span>{profile.contactInfo.location}</span>
                   </div>
                   <div className="flex items-center space-x-2">
+                    <Mail className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
                     <Mail className="w-3.5 h-3.5 text-[#515987] shrink-0" />
                     <span>{profile.contactInfo.email}</span>
                   </div>
