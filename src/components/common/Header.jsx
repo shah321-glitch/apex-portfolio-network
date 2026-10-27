@@ -125,7 +125,7 @@ export default function Header({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-2xl bg-[#0a0d14]/90 border-b border-white/[0.08] transition-all duration-300 shadow-2xl">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-2xl bg-[#DDE0F8]/85 border-b border-[#C1C6EB] transition-all duration-300 shadow-[0_4px_25px_rgba(80,90,160,0.08)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
         
         {/* =========================================================================
@@ -140,9 +140,9 @@ export default function Header({
           className="group flex items-center space-x-3 text-left focus:outline-none cursor-pointer"
         >
           {/* Geometric square glyph */}
-          <div className="w-9 h-9 rounded-lg border border-white/20 bg-white/[0.03] group-hover:border-white transition-all duration-300 flex items-center justify-center relative overflow-hidden">
+          <div className="w-9 h-9 rounded-lg border border-[#A6ADE2] bg-white/70 group-hover:border-[#4f46e5] group-hover:bg-white transition-all duration-300 flex items-center justify-center relative overflow-hidden shadow-sm">
             <svg
-              className="w-5 h-5 text-white group-hover:scale-105 transition-transform"
+              className="w-5 h-5 text-[#0f132a] group-hover:scale-105 transition-transform"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -154,10 +154,10 @@ export default function Header({
           </div>
 
           <div>
-            <span className="block font-editorial text-sm sm:text-base font-bold tracking-[0.24em] uppercase text-white group-hover:text-amber-300 transition-colors">
+            <span className="block font-editorial text-sm sm:text-base font-bold tracking-[0.24em] uppercase text-[#0f132a] group-hover:text-indigo-600 transition-colors">
               THE APEX
             </span>
-            <span className="block font-mono text-[9px] tracking-[0.28em] uppercase text-zinc-400 -mt-0.5">
+            <span className="block font-mono text-[9px] tracking-[0.28em] uppercase text-[#474e79] -mt-0.5">
               PORTFOLIO NETWORK
             </span>
           </div>
@@ -167,7 +167,7 @@ export default function Header({
             CENTER: RE-DESIGNED NAVIGATION TABS (HOME • JOURNEY • CAREER • ABOUT • CONTACT)
             With Interactive Dropdown for [Vijay, Pavel, Salman]
         ========================================================================== */}
-        <nav ref={navRef} className="hidden lg:flex items-center space-x-7 font-mono text-xs tracking-[0.22em] uppercase text-zinc-400 relative">
+        <nav ref={navRef} className="hidden lg:flex items-center space-x-7 font-mono text-xs tracking-[0.22em] uppercase text-[#3c426e] relative">
           {navTabs.map((tab) => {
             const isActive = (!isHub && currentSubpage === tab.id) || (isHub && tab.id === 'home');
             const isDropdownOpen = activeDropdown === tab.id;
@@ -181,13 +181,13 @@ export default function Header({
                 <button
                   onClick={() => handleTabClick(tab.id)}
                   className={`flex items-center space-x-1.5 py-2 transition-colors cursor-pointer relative ${
-                    isActive ? 'text-white font-bold' : 'hover:text-white'
+                    isActive ? 'text-[#0f132a] font-bold' : 'hover:text-[#0f132a]'
                   }`}
                 >
                   <span>{tab.label}</span>
-                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-amber-400' : 'text-zinc-500'}`} />
+                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-indigo-600' : 'text-[#646b9a]'}`} />
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-indigo-600 rounded-full shadow-[0_0_8px_rgba(79,70,229,0.7)]" />
                   )}
                 </button>
 
@@ -195,28 +195,28 @@ export default function Header({
                 {isDropdownOpen && (
                   <div
                     onMouseLeave={() => setActiveDropdown(null)}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 rounded-2xl bg-[#0c1017]/95 backdrop-blur-2xl border border-white/15 shadow-2xl p-2 z-50 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 rounded-2xl bg-white/95 backdrop-blur-2xl border border-[#C1C6EB] shadow-[0_20px_50px_rgba(80,90,160,0.22)] p-2 z-50 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150"
                   >
-                    <div className="px-3 py-1 font-mono text-[9px] text-zinc-400 uppercase tracking-widest border-b border-white/5 flex justify-between">
+                    <div className="px-3 py-1 font-mono text-[9px] text-[#515783] uppercase tracking-widest border-b border-[#E1E4F8] flex justify-between">
                       <span>Select Leader:</span>
-                      <span className="text-zinc-500">[{tab.label}]</span>
+                      <span className="text-[#71779e]">[{tab.label}]</span>
                     </div>
 
                     {/* For Home Tab, also offer Main Hub */}
                     {tab.id === 'home' && (
                       <button
                         onClick={() => selectLeaderForTab('hub', 'home')}
-                        className="w-full text-left p-2.5 rounded-xl hover:bg-white/10 transition-colors flex items-center justify-between group cursor-pointer"
+                        className="w-full text-left p-2.5 rounded-xl hover:bg-[#EFF1FD] transition-colors flex items-center justify-between group cursor-pointer"
                       >
                         <div>
-                          <span className="block text-xs font-bold text-white group-hover:text-amber-300">
+                          <span className="block text-xs font-bold text-[#0f132a] group-hover:text-indigo-600">
                             ★ The Main Hub (Tri-Cover)
                           </span>
-                          <span className="block text-[10px] text-zinc-400 font-mono mt-0.5">
+                          <span className="block text-[10px] text-[#515783] font-mono mt-0.5">
                             Combined Executive Editorial Network
                           </span>
                         </div>
-                        <ArrowRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-white" />
+                        <ArrowRight className="w-3.5 h-3.5 text-[#71779e] group-hover:text-indigo-600" />
                       </button>
                     )}
 
@@ -225,7 +225,7 @@ export default function Header({
                       <button
                         key={leader.id}
                         onClick={() => selectLeaderForTab(leader.id, tab.id)}
-                        className="w-full text-left p-2.5 rounded-xl hover:bg-white/10 transition-colors flex items-center justify-between group cursor-pointer"
+                        className="w-full text-left p-2.5 rounded-xl hover:bg-[#EFF1FD] transition-colors flex items-center justify-between group cursor-pointer"
                       >
                         <div className="flex items-center space-x-2.5">
                           <span
@@ -233,15 +233,15 @@ export default function Header({
                             style={{ backgroundColor: leader.color, boxShadow: `0 0 8px ${leader.color}` }}
                           />
                           <div>
-                            <span className="block text-xs font-bold text-white group-hover:text-amber-300">
+                            <span className="block text-xs font-bold text-[#0f132a] group-hover:text-indigo-600">
                               {leader.name}
                             </span>
-                            <span className="block text-[10px] text-zinc-400 font-mono">
+                            <span className="block text-[10px] text-[#515783] font-mono">
                               {tab.label} • {leader.badge}
                             </span>
                           </div>
                         </div>
-                        <ArrowRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-white" />
+                        <ArrowRight className="w-3.5 h-3.5 text-[#71779e] group-hover:text-indigo-600" />
                       </button>
                     ))}
                   </div>
@@ -258,19 +258,19 @@ export default function Header({
           
           {/* Sleek Search Input Pill */}
           <div className="relative">
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-white/[0.06] border border-white/10 hover:border-white/20 focus-within:border-white/40 transition-all text-xs font-mono">
-              <Search className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-white/70 border border-[#C1C6EB] hover:border-indigo-400 focus-within:border-indigo-600 focus-within:bg-white transition-all text-xs font-mono shadow-sm">
+              <Search className="w-3.5 h-3.5 text-[#515783] shrink-0" />
               <input
                 type="text"
                 placeholder="SEARCH..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent text-white placeholder-zinc-500 focus:outline-none w-20 sm:w-28 uppercase text-[11px] tracking-wider"
+                className="bg-transparent text-[#0f132a] placeholder-[#737ba8] focus:outline-none w-20 sm:w-28 uppercase text-[11px] tracking-wider"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="text-zinc-400 hover:text-white cursor-pointer"
+                  className="text-[#515783] hover:text-[#0f132a] cursor-pointer"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -279,8 +279,8 @@ export default function Header({
 
             {/* Live Instant Search Dropdown */}
             {searchQuery && (
-              <div className="absolute right-0 mt-2 w-72 sm:w-80 rounded-2xl bg-[#0d1117]/95 backdrop-blur-2xl border border-white/15 shadow-2xl p-2 z-50 space-y-1">
-                <div className="px-3 py-1.5 font-mono text-[10px] text-zinc-400 uppercase tracking-widest border-b border-white/5 flex justify-between">
+              <div className="absolute right-0 mt-2 w-72 sm:w-80 rounded-2xl bg-white/95 backdrop-blur-2xl border border-[#C1C6EB] shadow-[0_20px_50px_rgba(80,90,160,0.22)] p-2 z-50 space-y-1">
+                <div className="px-3 py-1.5 font-mono text-[10px] text-[#515783] uppercase tracking-widest border-b border-[#E1E4F8] flex justify-between">
                   <span>Search Results</span>
                   <span>{searchResults.length} Matches</span>
                 </div>
@@ -293,21 +293,21 @@ export default function Header({
                         onNavigateToPersona(item.person, item.subpage);
                         setSearchQuery('');
                       }}
-                      className="w-full text-left p-2.5 rounded-xl hover:bg-white/10 transition-colors flex items-center justify-between group cursor-pointer"
+                      className="w-full text-left p-2.5 rounded-xl hover:bg-[#EFF1FD] transition-colors flex items-center justify-between group cursor-pointer"
                     >
                       <div>
-                        <span className="block text-xs font-bold text-white group-hover:text-amber-300 transition-colors">
+                        <span className="block text-xs font-bold text-[#0f132a] group-hover:text-indigo-600 transition-colors">
                           {item.name}
                         </span>
-                        <span className="block text-[10px] text-zinc-400 font-mono mt-0.5">
+                        <span className="block text-[10px] text-[#515783] font-mono mt-0.5">
                           {item.tag}
                         </span>
                       </div>
-                      <ArrowRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-white transition-colors" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#71779e] group-hover:text-indigo-600 transition-colors" />
                     </button>
                   ))
                 ) : (
-                  <div className="p-3 text-center text-xs font-mono text-zinc-400">
+                  <div className="p-3 text-center text-xs font-mono text-[#515783]">
                     No results found for "{searchQuery}"
                   </div>
                 )}
@@ -320,10 +320,10 @@ export default function Header({
             onClick={handleSoundToggle}
             onMouseEnter={() => soundFX.playHover()}
             title={soundEnabled ? "Mute Web Audio" : "Enable Web Audio Interactions"}
-            className={`w-8 h-8 rounded-md border flex items-center justify-center transition-all cursor-pointer ${
+            className={`w-8 h-8 rounded-md border flex items-center justify-center transition-all cursor-pointer shadow-sm ${
               soundEnabled
-                ? 'border-amber-400/60 bg-amber-400/10 text-amber-300'
-                : 'border-white/15 bg-white/5 text-zinc-400 hover:text-white hover:border-white/30'
+                ? 'border-indigo-500 bg-indigo-100 text-indigo-700'
+                : 'border-[#C1C6EB] bg-white/70 text-[#3b416e] hover:text-[#0f132a] hover:bg-white hover:border-[#9DA5DE]'
             }`}
           >
             {soundEnabled ? (
@@ -336,7 +336,7 @@ export default function Header({
           {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-zinc-400 hover:text-white cursor-pointer"
+            className="lg:hidden p-2 text-[#0f132a] hover:text-indigo-600 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -347,26 +347,26 @@ export default function Header({
 
       {/* Mobile Menu Drawer (Complete with Vijay, Pavel, Salman on each page) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-[#090b10] px-4 py-4 space-y-3 font-mono text-xs uppercase tracking-widest">
+        <div className="lg:hidden border-t border-[#C1C6EB] bg-[#EFF1FD] px-4 py-4 space-y-3 font-mono text-xs uppercase tracking-widest shadow-lg">
           {navTabs.map((tab) => {
             const isExpanded = mobileExpandedTab === tab.id;
 
             return (
-              <div key={tab.id} className="border-b border-white/5 pb-2">
+              <div key={tab.id} className="border-b border-[#D8DCF7] pb-2">
                 <button
                   onClick={() => setMobileExpandedTab(isExpanded ? null : tab.id)}
-                  className="w-full flex items-center justify-between py-2 text-zinc-300 hover:text-white font-bold"
+                  className="w-full flex items-center justify-between py-2 text-[#0f132a] hover:text-indigo-600 font-bold"
                 >
                   <span>{tab.label}</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180 text-amber-400' : 'text-zinc-500'}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180 text-indigo-600' : 'text-[#71779e]'}`} />
                 </button>
 
                 {isExpanded && (
-                  <div className="pl-3 py-1 space-y-1.5 border-l border-white/10 my-1">
+                  <div className="pl-3 py-1 space-y-1.5 border-l-2 border-indigo-500 my-1">
                     {tab.id === 'home' && (
                       <button
                         onClick={() => selectLeaderForTab('hub', 'home')}
-                        className="block w-full text-left py-1.5 text-[11px] text-amber-300 hover:text-white"
+                        className="block w-full text-left py-1.5 text-[11px] text-indigo-600 hover:text-indigo-800 font-bold"
                       >
                         ★ The Main Hub (Tri-Cover)
                       </button>
@@ -375,7 +375,7 @@ export default function Header({
                       <button
                         key={leader.id}
                         onClick={() => selectLeaderForTab(leader.id, tab.id)}
-                        className="flex items-center space-x-2 w-full text-left py-1.5 text-[11px] text-zinc-300 hover:text-white"
+                        className="flex items-center space-x-2 w-full text-left py-1.5 text-[11px] text-[#2c325c] hover:text-[#0f132a]"
                       >
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: leader.color }} />
                         <span>{leader.name}</span>

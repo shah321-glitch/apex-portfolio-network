@@ -14,10 +14,10 @@ function StarField({ count = 800, mouseRef }) {
       pos[i * 3 + 1] = (Math.random() - 0.5) * 40;
       pos[i * 3 + 2] = (Math.random() - 0.5) * 30;
 
-      // Subtle editorial monochrome + gold/cyan dust
-      const r = 0.5 + Math.random() * 0.5;
-      const g = 0.5 + Math.random() * 0.5;
-      const b = 0.7 + Math.random() * 0.3;
+      // Subtle periwinkle & indigo dust matching #DDE0F8 theme
+      const r = 0.35 + Math.random() * 0.25;
+      const g = 0.4 + Math.random() * 0.25;
+      const b = 0.8 + Math.random() * 0.2;
       col[i * 3] = r;
       col[i * 3 + 1] = g;
       col[i * 3 + 2] = b;
@@ -79,10 +79,10 @@ function AmbientGeometry() {
       <mesh ref={meshRef}>
         <torusKnotGeometry args={[4, 0.4, 64, 16]} />
         <meshBasicMaterial
-          color="#222230"
+          color="#838dc7"
           wireframe
           transparent
-          opacity={0.15}
+          opacity={0.22}
         />
       </mesh>
     </group>
@@ -91,13 +91,12 @@ function AmbientGeometry() {
 
 export default function GlobalCanvas({ mouseRef }) {
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-60">
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-75">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 60 }}
         gl={{ antialias: true, alpha: true }}
       >
-        <color attach="background" args={['#060608']} />
-        <ambientLight intensity={0.4} />
+        <ambientLight intensity={0.6} />
         <pointLight position={[10, 10, 10]} intensity={1} color="#ffffff" />
         <StarField count={700} mouseRef={mouseRef} />
         <AmbientGeometry />

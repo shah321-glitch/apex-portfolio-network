@@ -6,28 +6,33 @@
     --font-display: 'Syne', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-body: 'Inter', sans-serif;
+    --theme-lavender: #DDE0F8;
+    --theme-lavender-light: #F0F2FD;
+    --theme-lavender-deep: #C9CEF5;
   }
 
   body {
-    background-color: #060608;
-    color: #e8e8ed;
+    background-color: #DDE0F8;
+    background-image: linear-gradient(135deg, #F0F2FD 0%, #DDE0F8 45%, #C9CEF5 100%);
+    background-attachment: fixed;
+    color: #0f132a;
     font-family: var(--font-body);
     overflow-x: hidden;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar matched to #DDE0F8 theme */
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #09090c;
+    background: #DDE0F8;
   }
   ::-webkit-scrollbar-thumb {
-    background: #272730;
-    border-radius: 2px;
+    background: #A6ACE0;
+    border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #4a4a58;
+    background: #7B85D4;
   }
 }
 
@@ -48,28 +53,28 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
-/* Subtle scanline effect */
+/* Subtle scanline effect adapted for luxurious periwinkle theme */
 .editorial-scanlines {
   background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
+    rgba(100, 110, 180, 0) 50%, 
+    rgba(80, 90, 160, 0.06) 50%
   ), linear-gradient(
     90deg,
-    rgba(255, 0, 0, 0.03),
-    rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.03)
+    rgba(99, 102, 241, 0.02),
+    rgba(168, 85, 247, 0.01),
+    rgba(59, 130, 246, 0.02)
   );
   background-size: 100% 3px, 6px 100%;
 }
 
-/* Text outline utility */
+/* Text outline utility adapted for #DDE0F8 theme */
 .text-stroke-thin {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
+  -webkit-text-stroke: 1px rgba(15, 19, 42, 0.35);
   color: transparent;
 }
 
 .text-stroke-thick {
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+  -webkit-text-stroke: 1.5px rgba(15, 19, 42, 0.85);
   color: transparent;
 }
 

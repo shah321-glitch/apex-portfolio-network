@@ -75,13 +75,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#060608] text-[#f1f1f5] overflow-x-hidden selection:bg-white selection:text-black">
+    <div className="relative min-h-screen bg-[#DDE0F8] text-[#0f132a] overflow-x-hidden selection:bg-[#4f46e5] selection:text-white">
       
       {/* Editorial Grain Overlay */}
       <div className="fixed inset-0 pointer-events-none z-40 editorial-grain" />
 
       {/* Subtle Scanlines Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-30 opacity-30 editorial-scanlines" />
+      <div className="fixed inset-0 pointer-events-none z-30 opacity-20 editorial-scanlines" />
 
       {/* Ambient 3D Three.js WebGL Canvas */}
       <GlobalCanvas mouseRef={mouseRef} />
